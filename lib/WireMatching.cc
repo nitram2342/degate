@@ -76,15 +76,14 @@ void WireMatching::set_min_edge_magnitude(double min_edge_magnitude) {
 
 void WireMatching::run() {
 
-  ZeroCrossingEdgeDetection ed(bounding_box.get_min_x(),
+  CannyEdgeDetection ed(bounding_box.get_min_x(),
 			       bounding_box.get_max_x(),
 			       bounding_box.get_min_y(),
 			       bounding_box.get_max_y(),
+			       wire_diameter,
 			       median_filter_width,
 			       sigma > 0 ? 10 : 0,
 			       sigma,
-			       wire_diameter >> 1,
-			       wire_diameter + (wire_diameter >> 1),
 			       min_edge_magnitude, 0.5);
 
   TileImage_GS_DOUBLE_shptr i = ed.run(img, TileImage_GS_DOUBLE_shptr(), "/tmp");
