@@ -80,21 +80,24 @@ bool WireMatchingGUI::before_dialog() {
     wire_diameter = project->get_default_wire_diameter(),
     median_filter_width = 3;
   double
-    sigma = 0.5,
-    min_edge_magnitude = 0.25;
+    sigma = 0,
+    min_edge_magnitude = 0.25,
+    max_edge_magnitude = 0.50;
 
 
   WireMatchingParamsWin wm(parent,
 			   wire_diameter, median_filter_width,
-			   sigma, min_edge_magnitude);
+			   sigma, min_edge_magnitude, max_edge_magnitude);
 
   if(wm.run(&wire_diameter, &median_filter_width,
-	    &sigma, &min_edge_magnitude)) {
+	    &sigma, &min_edge_magnitude, &max_edge_magnitude)) {
 
     matching->set_wire_diameter(wire_diameter);
     matching->set_median_filter_width(median_filter_width);
     matching->set_sigma(sigma);
     matching->set_min_edge_magnitude(min_edge_magnitude);
+    matching->set_max_edge_magnitude(max_edge_magnitude);
+
 
     return true;
   }

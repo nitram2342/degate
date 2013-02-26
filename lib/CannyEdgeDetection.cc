@@ -112,6 +112,21 @@ void CannyEdgeDetection::hysteresis(TileImage_GS_DOUBLE_shptr sup_edge_image) {
 	  sup_edge_image->set_pixel(x, y, 1);
 	  running = true;
 	}
+	else if(sup_edge_image->get_pixel(x, y) == 2 &&
+	   ( sup_edge_image->get_pixel(x-1, y-1) != 1 &&
+	     sup_edge_image->get_pixel(x  , y-1) != 1 &&
+	     sup_edge_image->get_pixel(x+1, y-1) != 1 &&
+
+	     sup_edge_image->get_pixel(x-1, y) != 1 &&
+	     sup_edge_image->get_pixel(x+1, y) != 1 &&
+
+	     sup_edge_image->get_pixel(x-1, y+1) != 1 &&
+	     sup_edge_image->get_pixel(x  , y+1) != 1 &&
+	     sup_edge_image->get_pixel(x+1, y+1) != 1)) {
+
+	  sup_edge_image->set_pixel(x, y, 0);
+	  running = true;
+	}
       }
     }
   }

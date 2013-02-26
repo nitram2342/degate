@@ -37,7 +37,8 @@ WireMatchingParamsWin::WireMatchingParamsWin(Gtk::Window *parent,
 					     unsigned int wire_diameter,
 					     unsigned int median_filter_width,
 					     double sigma,
-					     double min_edge_magnitude) :
+					     double min_edge_magnitude,
+					     double max_edge_magnitude) :
   GladeFileLoader("wire_matching_params.glade", "set_wire_matching_params_dialog") {
 
   assert(parent);
@@ -88,6 +89,13 @@ WireMatchingParamsWin::WireMatchingParamsWin(Gtk::Window *parent,
       entry_min_edge_magnitude->set_text(strdup(txt));
     }
 
+    get_widget("entry_max_edge_magnitude", entry_max_edge_magnitude);
+    if(entry_max_edge_magnitude != NULL) {
+      char txt[100];
+      snprintf(txt, sizeof(txt), "%f", max_edge_magnitude);
+      entry_max_edge_magnitude->set_text(strdup(txt));
+    }
+
   }
 }
 
@@ -98,12 +106,14 @@ WireMatchingParamsWin::~WireMatchingParamsWin() {
 bool WireMatchingParamsWin::run(unsigned int * wire_diameter,
 				unsigned int * median_filter_width,
 				double * sigma,
-				double * min_edge_magnitude) {
+				double * min_edge_magnitude,
+				double * max_edge_magnitude) {
 
   assert(wire_diameter != NULL);
   assert(median_filter_width != NULL);
   assert(sigma != NULL);
   assert(min_edge_magnitude != NULL);
+  assert(max_edge_magnitude != NULL);
 
 
   while(true) {
@@ -114,9 +124,10 @@ bool WireMatchingParamsWin::run(unsigned int * wire_diameter,
       *median_filter_width = atoi(entry_median_filter_width->get_text().c_str());
       *sigma = atof(entry_sigma->get_text().c_str());
       *min_edge_magnitude = atof(entry_min_edge_magnitude->get_text().c_str());
+      *max_edge_magnitude = atof(entry_max_edge_magnitude->get_text().c_str());
 
       if(*wire_diameter > 0 && *median_filter_width >= 0 &&
-	 sigma >= 0 && min_edge_magnitude > 0) {
+	 sigma >= 0 && min_edge_magnitude > 0 && max_edge_magnitude > 0) {
 	get_dialog()->hide();
 	return true;
       }

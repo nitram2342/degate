@@ -20,7 +20,7 @@
 */
 
 #include <WireMatching.h>
-#include <ZeroCrossingEdgeDetection.h>
+#include <CannyEdgeDetection.h>
 #include <BoundingBox.h>
 #include <LineSegmentExtraction.h>
 #include <MedianFilter.h>
@@ -31,8 +31,9 @@ using namespace degate;
 WireMatching::WireMatching() :
   wire_diameter(5),
   median_filter_width(3),
-  sigma(0.5),
-  min_edge_magnitude(0.25) {
+  sigma(0),
+  min_edge_magnitude(0.25),
+  max_edge_magnitude(0.50) {
 }
 
 
@@ -74,6 +75,10 @@ void WireMatching::set_min_edge_magnitude(double min_edge_magnitude) {
   this->min_edge_magnitude = min_edge_magnitude;
 }
 
+void WireMatching::set_max_edge_magnitude(double max_edge_magnitude) {
+  this->max_edge_magnitude = max_edge_magnitude;
+}
+
 void WireMatching::run() {
 
   CannyEdgeDetection ed(bounding_box.get_min_x(),
@@ -84,7 +89,7 @@ void WireMatching::run() {
 			       median_filter_width,
 			       sigma > 0 ? 10 : 0,
 			       sigma,
-			       min_edge_magnitude, 0.5);
+			       min_edge_magnitude, max_edge_magnitude);
 
   TileImage_GS_DOUBLE_shptr i = ed.run(img, TileImage_GS_DOUBLE_shptr(), "/tmp");
   assert(i != NULL);

@@ -35,7 +35,7 @@ namespace degate {
     Layer_shptr layer;
     LogicModel_shptr lmodel;
     unsigned int wire_diameter, median_filter_width;
-    double sigma, min_edge_magnitude;
+    double sigma, min_edge_magnitude, max_edge_magnitude;
     BackgroundImage_shptr img;
 
     BoundingBox bounding_box;
@@ -56,6 +56,7 @@ namespace degate {
     void set_median_filter_width(unsigned int median_filter_width);
     void set_sigma(double sigma);
     void set_min_edge_magnitude(double min_edge_magnitude);
+    void set_max_edge_magnitude(double max_edge_magnitude);
 
   };
 
