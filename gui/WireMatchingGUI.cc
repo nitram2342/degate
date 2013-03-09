@@ -3,6 +3,7 @@
   This file is part of the IC reverse engineering tool degate.
 
   Copyright 2008, 2009, 2010 by Martin Schobert
+  Copyright 2013 by Taekgwan Kim
 
   Degate is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -80,21 +81,24 @@ bool WireMatchingGUI::before_dialog() {
     wire_diameter = project->get_default_wire_diameter(),
     median_filter_width = 3;
   double
-    sigma = 0.5,
-    min_edge_magnitude = 0.25;
+    sigma = 0,
+    min_edge_magnitude = 0.25,
+    max_edge_magnitude = 0.50;
 
 
   WireMatchingParamsWin wm(parent,
 			   wire_diameter, median_filter_width,
-			   sigma, min_edge_magnitude);
+			   sigma, min_edge_magnitude, max_edge_magnitude);
 
   if(wm.run(&wire_diameter, &median_filter_width,
-	    &sigma, &min_edge_magnitude)) {
+	    &sigma, &min_edge_magnitude, &max_edge_magnitude)) {
 
     matching->set_wire_diameter(wire_diameter);
     matching->set_median_filter_width(median_filter_width);
     matching->set_sigma(sigma);
     matching->set_min_edge_magnitude(min_edge_magnitude);
+    matching->set_max_edge_magnitude(max_edge_magnitude);
+
 
     return true;
   }

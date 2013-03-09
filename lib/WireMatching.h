@@ -2,7 +2,8 @@
 
   This file is part of the IC reverse engineering tool degate.
 
-  Copyright 2008, 2009, 2010 by Martin Schobert
+  Copyright 2008, 2009, 2010 by Martin Schobert.
+  Copyright 2013 by Taekgwan Kim
 
   Degate is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -35,7 +36,7 @@ namespace degate {
     Layer_shptr layer;
     LogicModel_shptr lmodel;
     unsigned int wire_diameter, median_filter_width;
-    double sigma, min_edge_magnitude;
+    double sigma, min_edge_magnitude, max_edge_magnitude;
     BackgroundImage_shptr img;
 
     BoundingBox bounding_box;
@@ -56,6 +57,7 @@ namespace degate {
     void set_median_filter_width(unsigned int median_filter_width);
     void set_sigma(double sigma);
     void set_min_edge_magnitude(double min_edge_magnitude);
+    void set_max_edge_magnitude(double max_edge_magnitude);
 
   };
 

@@ -3,6 +3,7 @@
   This file is part of the IC reverse engineering tool degate.
 
   Copyright 2008, 2009, 2010 by Martin Schobert
+  Copyright 2013 by Taekgwan Kim
 
   Degate is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -20,7 +21,7 @@
 */
 
 #include <WireMatching.h>
-#include <ZeroCrossingEdgeDetection.h>
+#include <CannyEdgeDetection.h>
 #include <BoundingBox.h>
 #include <LineSegmentExtraction.h>
 #include <MedianFilter.h>
@@ -31,8 +32,9 @@ using namespace degate;
 WireMatching::WireMatching() :
   wire_diameter(5),
   median_filter_width(3),
-  sigma(0.5),
-  min_edge_magnitude(0.25) {
+  sigma(0),
+  min_edge_magnitude(0.25),
+  max_edge_magnitude(0.50) {
 }
 
 
@@ -74,18 +76,21 @@ void WireMatching::set_min_edge_magnitude(double min_edge_magnitude) {
   this->min_edge_magnitude = min_edge_magnitude;
 }
 
+void WireMatching::set_max_edge_magnitude(double max_edge_magnitude) {
+  this->max_edge_magnitude = max_edge_magnitude;
+}
+
 void WireMatching::run() {
 
-  ZeroCrossingEdgeDetection ed(bounding_box.get_min_x(),
+  CannyEdgeDetection ed(bounding_box.get_min_x(),
 			       bounding_box.get_max_x(),
 			       bounding_box.get_min_y(),
 			       bounding_box.get_max_y(),
+			       wire_diameter,
 			       median_filter_width,
 			       sigma > 0 ? 10 : 0,
 			       sigma,
-			       wire_diameter >> 1,
-			       wire_diameter + (wire_diameter >> 1),
-			       min_edge_magnitude, 0.5);
+			       min_edge_magnitude, max_edge_magnitude);
 
   TileImage_GS_DOUBLE_shptr i = ed.run(img, TileImage_GS_DOUBLE_shptr(), "/tmp");
   assert(i != NULL);

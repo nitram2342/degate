@@ -3,6 +3,7 @@
  This file is part of the IC reverse engineering tool degate.
 
  Copyright 2008, 2009, 2010 by Martin Schobert
+ Copyright 2013 by Taekgwan Kim
 
  Degate is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -110,6 +111,21 @@ void CannyEdgeDetection::hysteresis(TileImage_GS_DOUBLE_shptr sup_edge_image) {
 	     sup_edge_image->get_pixel(x+1, y+1) == 1)) {
 
 	  sup_edge_image->set_pixel(x, y, 1);
+	  running = true;
+	}
+	else if(sup_edge_image->get_pixel(x, y) == 2 &&
+	   ( sup_edge_image->get_pixel(x-1, y-1) != 1 &&
+	     sup_edge_image->get_pixel(x  , y-1) != 1 &&
+	     sup_edge_image->get_pixel(x+1, y-1) != 1 &&
+
+	     sup_edge_image->get_pixel(x-1, y) != 1 &&
+	     sup_edge_image->get_pixel(x+1, y) != 1 &&
+
+	     sup_edge_image->get_pixel(x-1, y+1) != 1 &&
+	     sup_edge_image->get_pixel(x  , y+1) != 1 &&
+	     sup_edge_image->get_pixel(x+1, y+1) != 1)) {
+
+	  sup_edge_image->set_pixel(x, y, 0);
 	  running = true;
 	}
       }

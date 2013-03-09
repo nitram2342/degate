@@ -3,6 +3,7 @@
 This file is part of the IC reverse engineering tool degate.
 
 Copyright 2008, 2009, 2010 by Martin Schobert
+Copyright 2013 by Taekgwan Kim
 
 Degate is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -37,7 +38,8 @@ class WireMatchingParamsWin : private GladeFileLoader {
 			unsigned int wire_diameter,
 			unsigned int median_filter_width,
 			double sigma,
-			double min_edge_magnitude);
+			double min_edge_magnitude,
+			double max_edge_magnitude);
 
   ~WireMatchingParamsWin();
 
@@ -49,7 +51,8 @@ class WireMatchingParamsWin : private GladeFileLoader {
   bool run(unsigned int * wire_diameter,
 	   unsigned int * median_filter_width,
 	   double * sigma,
-	   double * min_edge_magnitude);
+	   double * min_edge_magnitude,
+	   double * max_edge_magnitude);
 
  private:
   Gtk::Window *parent;
@@ -58,6 +61,7 @@ class WireMatchingParamsWin : private GladeFileLoader {
   Gtk::Entry * entry_median_filter_width;
   Gtk::Entry * entry_sigma;
   Gtk::Entry * entry_min_edge_magnitude;
+  Gtk::Entry * entry_max_edge_magnitude;
 
   bool ok_clicked;
 
