@@ -7,7 +7,12 @@ About
 Degate is a software for semi-automatic VLSI reverse engineering of digital logic
 in chips. Please visit the project website to learn more about Degate.
 
-  http://degate.org
+  https://degate.org
+
+
+This repository here has a documentary purpose. It is the repository for the old Degate version. The new Degate is on Github, too. Please follow this link:
+
+  https://github.com/DegateCommunity
 
 
 Installation
